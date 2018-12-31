@@ -1,0 +1,244 @@
+<html>
+    <head>
+        <title>test</title>
+        <style>
+        .one
+        {
+                background-color: #04D404;
+                border: 20px double brown;
+                border-radius: 10px;
+                margin: 200px;
+                padding: 200px 40px 40px 40px;
+        }
+        #text
+        {
+          color: aqua;
+
+        }
+        
+        
+        </style>
+    </head>
+    <body>
+      <div id='input'>
+        <label>输入数组</label>
+        <textarea type="text" class="array" placeholder="请用,分开数组" ></textarea>
+        <br>
+        <label>输入数组</label>
+        <textarea type="text" class="array" placeholder="请用,分开数组" ></textarea>
+        <br>
+        <label>输入数组</label>
+        <textarea type="text" class="array" placeholder="请用,分开数组" ></textarea>
+        <br>
+        <label>输入数组</label>
+        <textarea type="text" class="array" placeholder="请用,分开数组" ></textarea>
+        <br>
+        <label>输入数组</label>
+        <textarea type="text" class="array" placeholder="请用,分开数组" ></textarea>
+        <br>
+        <label>输入数组</label>
+        <textarea type="text" class="array" placeholder="请用,分开数组" ></textarea>
+        <br>
+        <label>输入数组</label>
+        <textarea type="text" class="array" placeholder="请用,分开数组" ></textarea>
+        <br>
+        <label>输入数组</label>
+        <textarea type="text" class="array" placeholder="请用,分开数组" ></textarea>
+        <br>
+        <label>选择几组</label>
+        <input type="number" id="size" >
+        <br>
+        <button id='btn' onclick=init()>确认</button>
+        <button id='btn' onclick=remove()>清除</button>
+      </div>
+      <div id="jieguo">
+      </div>
+        <div id="zuhe">
+      </div>
+           
+
+
+
+    </body>
+    <script>
+
+      var startArray=[];
+
+
+      function queue(arr, size){
+          if(size > arr.length){ return;}
+          var allResult = [];
+        
+          (function(arr, size, result){
+            if(result.length == size){
+              allResult.push(result);
+          }else{
+              for(var i =0 ,len = arr.length;i < len; i++){
+               var newArr = [].concat(arr),
+                   curItem = newArr.splice(i,1);
+               arguments.callee(newArr, size, [].concat(result,curItem));
+             }
+           }
+         })(arr, size, []);
+       
+         return allResult;
+       }
+       
+       
+       function choose(arr, size ){
+         var allResult = [];
+       
+         (function(arr, size, result){
+           var arrLen = arr.length;
+          if(size > arrLen){
+             return;
+           }
+          if(size == arrLen){
+             allResult.push([].concat(result, arr))
+           }
+          else{
+             for(var i =0 ; i < arrLen; i++){
+               var newResult = [].concat(result);
+               newResult.push(arr[i]);
+                if(size == 1){
+                 allResult.push(newResult);
+               }else{
+                 var newArr = [].concat(arr);
+                 newArr.splice(0, i +　1);
+                arguments.callee(newArr, size - 1, newResult);
+               }
+             }
+           }
+         })(arr, size, []);
+       
+         return allResult;
+       }
+       
+       function showResult(result)
+       {
+         document.getElementById('jieguo').innerHTML=result.length; 
+         console.log('The number of result sets: ' + result.length );
+            
+            
+         for(var i=0 , len = result.length;i < len; i++)
+         {
+          var object2={};
+           for(var j=0 ; j<result[i].length; j++)
+           {
+            var data=object[result[i][j]];
+            var key1=i;
+                object2[key1]=data;
+            
+            }
+            
+          var li=document.createElement('li')
+          //console.log(final);
+          li.innerHTML=object2;
+          //console.log(typeof document.getElementById('zuhe'));
+          document.getElementById('zuhe').appendChild(li);
+            //console.log(startArray[result[i][j]]);
+           
+          }
+          
+          
+          
+         }
+       
+       
+      function init(){
+        var size=document.getElementById('size').value;
+        createObject(size);
+        startchoose(size);
+      }
+      
+      
+       
+      
+       function remove(){
+        document.getElementById('zuhe').innerHTML='';
+        document.getElementById('jieguo').innerHTML='';
+      
+       }
+      
+       
+      function createObject(){
+        {
+         var array=[];
+         var idx;
+         var parentdom=document.getElementById('input');
+         var classdom=parentdom.getElementsByClassName('array');
+         var object={};
+        for (idx=0; idx<8; idx++)
+             { 
+               array=classdom[idx].value;
+               array.id=idx; 
+               array.split(',');
+               console.log(array);
+               
+               var key = array.id;
+               var value= array;
+               object[key]=value;
+             
+               //startArray.push(array);
+             }
+             
+         }
+               
+           
+      }
+      
+      
+      
+      
+      
+      /*function showResult(result){
+         document.getElementById('jieguo').innerHTML='一共有' + result.length+'组合';
+      
+         //document.getElementById('zuhe').innerHTML=
+      
+         
+       }*/
+      
+      
+       
+      function startchoose(size){
+        var arr=[0,1,2,3,4,5,6,7];
+        
+        showResult(choose(arr,size));
+      
+      }
+
+      
+      
+      
+      
+      
+      
+      //  var array = document.getElementById('array').value;
+      //  console.log(array);
+      //  var arr=array.split(',');
+      //  console.log(arr);
+       //var size=document.getElementById('size').value;
+      
+       //*showResult(choose(arr, size));
+      
+       //showResult(queue(arr, size));
+      
+      
+      //var data=choose(arr, size);
+      
+      //let output='<h> 组合 </h>';
+      
+      //data.forEach(function(zuhe){
+       
+       //output+= '<li>'+zuhe+'</li>';
+      
+      
+      
+      
+      //document.getElementById('zuhe').innerHTML=output;
+      
+      
+          </script>
+   
+</html>
