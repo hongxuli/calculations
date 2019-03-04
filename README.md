@@ -1,1 +1,1 @@
-some calculate functions
+some calculating functions
