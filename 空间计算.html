@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.min.js"></script>
+    <style>
+        .important{
+            font-weight:bold;
+        }
+        .tab-content {
+            width: 350px;
+            /*position: absolute;*/
+            border: 1px solid #DDD;
+            
+ 
+            text-align: center;
+ 
+            /* position: absolute; */
+            top: 31px;
+            left: 0;
+        }
+        
+
+
+        .tab  {
+            
+            list-style:none;   
+            cursor: pointer;
+        }
+        .tab-content-show {
+            display: block;
+        }
+        .tab-content-hide {
+            display: none;
+        }
+
+
+    </style>
+    <script>
+          var x,y,z,y_x,y_z,x_z,y_xy,x_xz,z_yz,_xz,_yz,_yx,xyz,yx_degree,yz_decgree,xz_degree;
+          var areaXYZ,areaOXY,areaOYZ,areaOXZ,volume,radiusOfinsideBall
+          $(document).ready (function(){
+              $('label').addClass('important');
+              var tabList=$('#tab-list').find('li');
+              $(tabList).click(function(){
+                   for(let value of tabList){
+                       $(value).toggleClass("tab-active",false);         
+                   }
+                   $('.tab-content').toggleClass('tab-content-show',false);
+                   $('.tab-content').toggleClass('tab-content-hide',true);
+                   $(this).toggleClass("tab-active",true);
+                   var index =$(this).index()+1;
+                   
+                   $('dev[id=part_'+index+']').toggleClass('tab-content-show',true);
+                   $('dev[id=part_'+index+']').toggleClass('tab-content-hide',false);
+              });    
+              })
+              
+
+            function init(){
+                 x=document.getElementById('x').value;
+                 y=document.getElementById('y').value;
+                 z=document.getElementById('z').value;
+                 var index=$('.tab-active').index()+1;
+                 console.log(index);
+                 switch(index){
+                 case 1:
+                    Part_1();
+                    break;
+                 case 2:
+                    Part_2();
+                    break;   
+                 }
+                 
+            }
+            function Part_1(){
+                 distance();
+                 degree();
+                 four();
+                 five();
+                 six();
+                 seven();
+            }
+            function Part_2(){
+                volume();
+                area();
+                radiusOfinsideBall();
+                ratio();
+            }
+            function distance(){
+              y_x =(Math.sqrt(Math.pow(x,2)+Math.pow(y,2))).toFixed(11);
+             $("#yx").text(y_x)
+              y_z =(Math.sqrt(Math.pow(z,2)+Math.pow(y,2))).toFixed(11);
+             $("#yz").text(y_z)
+              x_z =(Math.sqrt(Math.pow(x,2)+Math.pow(z,2))).toFixed(11);
+             $("#xz").text(x_z)
+             
+            }
+
+            function degree(){
+            
+
+              y_xy = (y/y_x).toFixed(11)
+             $("#y_xy").text(y_xy)
+              z_yz = (z/y_z).toFixed(11)
+             $("#z_yz").text(z_yz)
+              x_xz = (x/x_z).toFixed(11)
+             $("#x_xz").text(x_xz)
+            }
+            function four(){
+            //  y_x= $("#yx").text(y_x);
+            //  y_z= $("#yx").text(y_z);
+            //  x_z=$("#yx").text(x_z);  
+
+                _xz = (y_x/2+y_z/2-x_z/2).toFixed(11)
+                $("#_xz").text(_xz)
+
+                _yz = (y_x/2-y_z/2+x_z/2).toFixed(11)
+                $("#_yz").text(_yz)
+
+                _yx = (y_x/2-y_z/2-x_z/2).toFixed(11)
+                $("#_yx").text(_yx)
+            }
+            function five(){
+                xyz =Math.sqrt((Math.pow(x,2)+Math.pow(y,2)+Math.pow(z,2)));
+                $("#xyz").text(xyz.toFixed(11))
+            }
+            function six(){
+                yx_degree=yuXian(y_z,x_z,y_x).toFixed(11);
+                $("#yx_degree").text(yx_degree)
+                //yz_degree=((Math.pow(y_x,2)+Math.pow(x_z,2)-Math.pow(y_z,2))/2*y_x*x_z).toFixed(6)
+                yz_degree=yuXian(x_z,y_x,y_z).toFixed(11);
+                $("#yz_degree").text(yz_degree)
+                xz_degree=yuXian(y_x,y_z,x_z).toFixed(11)
+                $("#xz_degree").text(xz_degree)
+            }
+            function yuXian(a,b,c){
+                 var result =  (Math.pow(a,2)+Math.pow(b,2)-Math.pow(c,2))/(2*a*b);
+                 return result;
+            }
+            function seven(){
+               var one =  $("#yx").text();
+               var two =  $("#yz").text();
+               var three =  $("#xz").text();
+               var max =Math.max(one,two);
+               max =Math.max(max,three);
+
+                huJinBi=max/xyz;
+               $("#huJinBi").text(huJinBi.toFixed(11));
+            }
+            function volume(){
+                 volume = (Math.sqrt((Math.pow(x,2)*Math.pow(y,2)*Math.pow(z,2)*4)))/12;
+                 $("#volume").text(volume.toFixed(11));
+            }
+            function area(){
+                 areaOXY=x*y/2;
+                 areaOYZ=y*z/2;
+                 areaOXZ=x*z/2;
+                var a=sqrt_pow(x,y);
+                var b=sqrt_pow(y,z);
+                var c=sqrt_pow(x,z);
+                var at=(a+b+c)/2;
+                areaXYZ=Math.sqrt(at*(at-a)*(at-b)*(at-c));
+                $("#oxy").text(areaOXY.toFixed(11));
+                $("#oyz").text(areaOYZ.toFixed(11));
+                $("#oxz").text(areaOXZ.toFixed(11));
+                $("#area_xyz").text(areaXYZ.toFixed(11));
+
+            }
+            function radiusOfinsideBall(){
+                radiusOfinsideBall=volume*3/(areaXYZ+areaOXY+areaOXZ+areaOYZ);
+                $("#insideRadius").text(radiusOfinsideBall.toFixed(11));
+            }
+            function ratio(){
+                var jinXiang = Math.sqrt((Math.pow(x,2)+Math.pow(y,2)+Math.pow(z,2)))*(1/3);
+                var ratio = jinXiang/radiusOfinsideBall;
+                $("#ratio").text(ratio.toFixed(11));
+
+            }
+            function sqrt_pow(n,m){
+                var result= Math.sqrt(Math.pow(n,2)+Math.pow(m,2));
+                return result;
+            }
+            </script>
+</head>
+
+<body>
+    <div id='navigation' class='navigation'> 
+         <ul id='tab-list' class='tab'>
+            <li   class='tab-active part_1 tab'> 空间计算</li>
+            <li class='part_2 tab'>直角三棱锥</li>
+         </ul>
+    </div>
+
+    <div id='input'>
+        <label>X</label>
+        <input type="number" id="x" >
+        <label>Y</label>
+        <input type="number" id="y" >
+        <label>Z</label>
+        <input type="number" id="z" >  
+    </div> 
+
+    <button id='btn' onclick=init()>确认</button>
+
+<br>
+<dev id='part_1'  class="tab-content tab-content-show">
+     <div id='distance'>
+        <label> yx（距离）</label>
+        <div id='yx'></div>
+        <label> yz（距离）</label>
+        <div id='yz'></div>
+        <label> xz（距离）</label>
+        <div id='xz'></div>
+    </div>
+<br>
+    <div id='degree'>
+            <label> y与xy的余弦角度</label>
+            <div id='y_xy'></div>
+            <label> z与yz的余弦角度</label>
+            <div id='z_yz'></div>
+            <label> x与xz的余弦角度</label>
+            <div id='x_xz'></div>
+    </div>
+<br>   
+    <div id='4'>
+            <label> xz棱的中点到其对边向量</label>
+            <div id='_xz'></div>
+            <label> yz棱的中点到其对边的向量</label>
+            <div id='_yz'></div>
+            <label> yx棱的中点到其对边的向量</label>
+            <div id='_yx'></div>
+    </div>
+<br>
+    <div id='5'>
+            <label> 空间坐标的法线 </label>
+            <div id='xyz'></div>
+    </div>
+<br>   
+    <div id='6'>
+        <label> yx（距离）对的角度 </label>
+        <div id='yx_degree'></div>
+        <label> yz（距离）对的角度 </label>
+        <div id='yz_degree'></div>
+        <label> xz（距离）对的角度 </label>
+        <div id='xz_degree'></div>
+    </div>
+<br>   
+    <div id='7'>
+        <label> 弧径比 </label>
+        <div id='huJinBi'></div>
+    </div>
+</dev>
+
+<dev id='part_2' class="tab-content tab-content-hide">
+      <dev>
+        <label> 直角三棱锥体积 </label>
+        <div id='volume'></div>
+      </dev>
+      <br>     
+      <dev>
+            <label> 面积oxy </label>
+            <div id='oxy'></div>
+      </dev>  
+      <br> 
+      <dev>
+            <label> 面积oyz </label>
+            <div id='oyz'></div>
+      </dev> 
+      <br>  
+      <dev>
+            <label> 面积oxz </label>
+            <div id='oxz'></div>
+      </dev> 
+      <br>  
+      <dev>
+            <label> 面积xyz</label>
+            <div id='area_xyz'></div>
+      </dev> 
+      <br>  
+      <dev>
+            <label> 内接球半径</label>
+            <div id='insideRadius'></div>
+      </dev> 
+      <br>  
+      <dev>
+            <label> 径向与半径比值 </label>
+            <div id='ratio'></div>
+      </dev>  
+</dev>
+</body>
+
+</html>
