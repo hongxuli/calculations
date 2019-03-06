@@ -1,0 +1,26 @@
+{
+  "name": "calculations",
+  "version": "1.0.0",
+  "description": "some calculating functions",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^5.15.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hongxuli/calculations.git"
+  },
+  "keywords": [
+    "calculating"
+  ],
+  "author": "hongxu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hongxuli/calculations/issues"
+  },
+  "homepage": "https://github.com/hongxuli/calculations#readme"
+}

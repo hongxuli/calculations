@@ -91,6 +91,8 @@
                 area();
                 radiusOfinsideBall();
                 ratio();
+                five();
+                cosValue();
             }
             function distance(){
               y_x =(Math.sqrt(Math.pow(x,2)+Math.pow(y,2))).toFixed(11);
@@ -105,12 +107,17 @@
             function degree(){
             
 
-              y_xy = (y/y_x).toFixed(11)
-             $("#y_xy").text(y_xy)
-              z_yz = (z/y_z).toFixed(11)
-             $("#z_yz").text(z_yz)
-              x_xz = (x/x_z).toFixed(11)
-             $("#x_xz").text(x_xz)
+              y_xy = (y/y_x).toFixed(11);
+              var cos1 = trans(y_xy);
+             $("#y_xy").text("角度 "+cos1+" 余弦值 "+y_xy);
+
+              z_yz = (z/y_z).toFixed(11);
+              var cos2 = trans(z_yz);
+             $("#z_yz").text("角度 "+cos2+" 余弦值 "+z_yz);
+
+              x_xz = (x/x_z).toFixed(11);
+              var cos3 = trans(x_xz);
+             $("#x_xz").text("角度 "+cos3+" 余弦值 "+x_xz);
             }
             function four(){
             //  y_x= $("#yx").text(y_x);
@@ -129,15 +136,21 @@
             function five(){
                 xyz =Math.sqrt((Math.pow(x,2)+Math.pow(y,2)+Math.pow(z,2)));
                 $("#xyz").text(xyz.toFixed(11))
+                $("#faxian").text(xyz.toFixed(11))
+                
             }
             function six(){
                 yx_degree=yuXian(y_z,x_z,y_x).toFixed(11);
-                $("#yx_degree").text(yx_degree)
-                //yz_degree=((Math.pow(y_x,2)+Math.pow(x_z,2)-Math.pow(y_z,2))/2*y_x*x_z).toFixed(6)
+                var cos1 = trans(yx_degree);
+                $("#yx_degree").text("角度 "+cos1+" 余弦值 "+yx_degree);
+                
                 yz_degree=yuXian(x_z,y_x,y_z).toFixed(11);
-                $("#yz_degree").text(yz_degree)
+                var cos2 = trans(yz_degree);
+                $("#yz_degree").text("角度 "+cos2+" 余弦值 "+yz_degree);
+
                 xz_degree=yuXian(y_x,y_z,x_z).toFixed(11)
-                $("#xz_degree").text(xz_degree)
+                var cos3 = trans(xz_degree);
+                $("#xz_degree").text("角度 "+cos3+" 余弦值 "+xz_degree);
             }
             function yuXian(a,b,c){
                  var result =  (Math.pow(a,2)+Math.pow(b,2)-Math.pow(c,2))/(2*a*b);
@@ -182,6 +195,22 @@
                 $("#ratio").text(ratio.toFixed(11));
 
             }
+            function cosValue(){
+                var cosyx = Math.sqrt((Math.pow(x,2)+Math.pow(y,2)))/xyz;
+                var cosyz = Math.sqrt((Math.pow(z,2)+Math.pow(y,2)))/xyz;
+                var cosxz = Math.sqrt((Math.pow(x,2)+Math.pow(z,2)))/xyz;
+                var degree_cosyz = trans(cosyz);
+                var degree_cosxz = trans(cosxz);
+                var degree_cosyx = trans(cosyx);
+                console.log(degree_cosyz);
+                $("#cosyx").text("角度 "+degree_cosxz+" 余弦值 "+cosyx.toFixed(11));
+                $("#cosxz").text("角度 "+degree_cosxz+" 余弦值 "+cosxz.toFixed(11));
+                $("#cosyz").text("角度 "+degree_cosyz+" 余弦值 "+cosyz.toFixed(11));
+            }
+            function trans (cos) {
+                var result = (Math.acos(cos)*(180/Math.PI)).toFixed(6);
+                return result;
+              }
             function sqrt_pow(n,m){
                 var result= Math.sqrt(Math.pow(n,2)+Math.pow(m,2));
                 return result;
@@ -291,7 +320,28 @@
       <dev>
             <label> 径向与半径比值 </label>
             <div id='ratio'></div>
-      </dev>  
+      </dev> 
+      <br>  
+      <dev>
+            <label> 空间坐标的法线值 </label>
+            <div id='faxian'></div>
+      </dev> 
+      <br>  
+      <dev>
+            <label> yx的方向余弦 </label>
+            <div id='cosyx'></div>
+      </dev> 
+      <br>  
+      <dev>
+            <label> yz的方向余弦 </label>
+            <div id='cosyz'></div>
+      </dev> 
+      <br>  
+      <dev>
+            <label> xz的方向余弦 </label>
+            <div id='cosxz'></div>
+      </dev> 
+
 </dev>
 </body>
 
